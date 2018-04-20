@@ -10,9 +10,11 @@ import java.util.Scanner;
 import java.util.Set;
 
 public class Cheaters {
+	//Each n words phrase corresponds to a List of Files
 	private static Map<String,List<File>> repeatedPhrases = new HashMap<String,List<File>>();
 	//File pairs that contain same phrases.
 	private static Map<Set<File>, Integer> FilePairs = new HashMap<Set<File>, Integer>();
+	
 	public static void main(String[] args) {
 		File folder=new File("D:\\Java Programming\\Project7_kq874_cav2342\\sm_doc_set");
 		File[] listOfFiles = folder.listFiles();
@@ -59,6 +61,7 @@ public class Cheaters {
 		printOutFiles();
 	}
 	
+	//Assign each file pair with the number of same phrases they have
 	private static void addFilePairs(List<File> files) {
 		if(files.size()<=1) {
 			return;
@@ -79,6 +82,7 @@ public class Cheaters {
 		}
 	}
 	
+	//Check if the set already exists in FilePairs
 	private static Set<File> checkObject(Set<File> set) {
 		for(Set<File> s:FilePairs.keySet()) {
 			if(s.equals(set)) {
@@ -87,6 +91,8 @@ public class Cheaters {
 		}
 		return null;
 	}
+	
+	//Convert all words in a file to a list of Strings, remove punctuations and spaces
 	private static ArrayList<String> convertFile(File f){
 		ArrayList<String> list = new ArrayList<String>();
 		try {
@@ -103,6 +109,7 @@ public class Cheaters {
 		}
 		return list;
 	}
+	
 	private static void printOutFiles() {
 		//Print out the outcome by accessing FilePairs
 	}
