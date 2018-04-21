@@ -1,11 +1,15 @@
 package assignment7;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -16,7 +20,7 @@ public class Cheaters {
 	private static Map<Set<File>, Integer> FilePairs = new HashMap<Set<File>, Integer>();
 	
 	public static void main(String[] args) {
-		File folder=new File("D:\\Java Programming\\Project7_kq874_cav2342\\sm_doc_set");
+		File folder=new File("D:\\Java Programming\\Project7_kq874_cav2342\\big_doc_set");
 		File[] listOfFiles = folder.listFiles();
 		List<File> files = new ArrayList<File>();
 		for(File f:listOfFiles) {
@@ -112,5 +116,17 @@ public class Cheaters {
 	
 	private static void printOutFiles() {
 		//Print out the outcome by accessing FilePairs
+		List<Entry<Set<File>, Integer>> list = new ArrayList<>(FilePairs.entrySet());
+        list.sort(Entry.comparingByValue(Collections.reverseOrder()));
+        Map<Set<File>, Integer> result = new LinkedHashMap<>();
+        for (Entry<Set<File>, Integer> entry : list) {
+            result.put(entry.getKey(), entry.getValue());
+        }
+        for(Set<File> set:result.keySet()) {
+        	for(File f:set) {
+        		System.out.print(f.getName() + " ");
+        	}
+        	System.out.println(FilePairs.get(set));
+        }
 	}
 }
