@@ -123,10 +123,11 @@ public class Cheaters {
             result.put(entry.getKey(), entry.getValue());
         }
         for(Set<File> set:result.keySet()) {
+        	System.out.print(FilePairs.get(set) + ": ");
         	for(File f:set) {
         		System.out.print(f.getName() + " ");
-        	}
-        	System.out.println(FilePairs.get(set));
+        	}  
+        	System.out.println("");
         }
 	}
 }
