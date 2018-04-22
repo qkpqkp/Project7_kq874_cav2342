@@ -13,14 +13,20 @@ import java.util.Map.Entry;
 import java.util.Scanner;
 import java.util.Set;
 
-public class Cheaters {
+import javafx.application.Application;
+import javafx.stage.Stage;
+
+public class Cheaters extends Application {
 	//Each n words phrase corresponds to a List of Files
 	private static Map<String,List<File>> repeatedPhrases = new HashMap<String,List<File>>();
 	//File pairs that contain same phrases.
 	private static Map<Set<File>, Integer> FilePairs = new HashMap<Set<File>, Integer>();
 	
-	public static void main(String[] args) {
-		File folder=new File("D:\\Java Programming\\Project7_kq874_cav2342\\big_doc_set");
+	private static Stage window;
+	@Override
+	public void start(Stage primaryStage) throws Exception {
+		window = primaryStage;
+		File folder=new File("D:\\Java Programming\\Project7_kq874_cav2342\\sm_doc_set");
 		File[] listOfFiles = folder.listFiles();
 		List<File> files = new ArrayList<File>();
 		for(File f:listOfFiles) {
@@ -31,6 +37,10 @@ public class Cheaters {
 		int n = sc.nextInt();
 		sc.close();
 		findCheaters(n,files);
+		
+	}
+	public static void main(String[] args) {
+		launch(args);
 	}
 	
 	private static void findCheaters(int n, List<File> listOfFiles) {
@@ -63,6 +73,13 @@ public class Cheaters {
 			addFilePairs(repeatedPhrases.get(s));
 		}
 		printOutFiles();
+		GraphicDemo graphic = new GraphicDemo(FilePairs);
+		try {
+			graphic.start(window);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	//Assign each file pair with the number of same phrases they have
@@ -130,4 +147,6 @@ public class Cheaters {
         	System.out.println("");
         }
 	}
+
+	
 }
