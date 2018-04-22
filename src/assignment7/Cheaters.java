@@ -146,6 +146,55 @@ public class Cheaters extends Application {
         	}  
         	System.out.println("");
         }
+        //Matrix part
+        Map<File,Integer> files = new HashMap<File,Integer>();
+        int i = 1;
+        for(Set<File> set:FilePairs.keySet()) {
+        	for(File f: set) {
+        		if(!files.containsKey(f)) {
+        			files.put(f, i);
+        			i++;
+        		}
+        	}
+        }
+        String[][] Matrix = new String[files.size()+1][files.size()+1];
+        for(int j = 0;j<files.size()+1;j++) {
+        	for(int k = 0;k<files.size()+1;k++) {
+        		Matrix[j][k] = "-";
+        		if(j>=2&&k<j) {
+        			Matrix[j][k] = Integer.toString(0);
+        		}
+        	}
+        }
+        Matrix[0][0] = "                    ";
+        for(File f:files.keySet()) {
+        	Matrix[0][files.get(f)] = f.getName();
+        	Matrix[files.get(f)][0] = f.getName();
+        	for(Set<File> set:FilePairs.keySet()) {
+        		if(set.contains(f)) {
+        			List<File> l = new ArrayList<File>(set);
+        			if(l.get(0).equals(f)) {
+        				if(files.get(f)>=2&&files.get(l.get(1))<files.get(f)) {
+        					Matrix[files.get(f)][files.get(l.get(1))] = FilePairs.get(set).toString();
+        				}
+        			}
+        			else {
+        				if(files.get(f)>=2&&files.get(l.get(0))<files.get(f)) {
+        					Matrix[files.get(f)][files.get(l.get(0))] = FilePairs.get(set).toString();
+        				}
+        			}
+        		}
+        	}
+        }
+        for(int j = 0;j<files.size()+1;j++) {
+        	for(int k = 0;k<files.size()+1;k++) {
+        		System.out.print(Matrix[k][j]);
+        		for(int m = 0;m<20-Matrix[k][j].length();m++) {
+        			System.out.print(" ");
+        		}
+        	}
+        	System.out.println("");
+        }
 	}
 
 	
