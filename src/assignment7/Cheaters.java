@@ -1,7 +1,6 @@
 package assignment7;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -25,14 +24,16 @@ public class Cheaters extends Application {
 	private static Stage window;
 	@Override
 	public void start(Stage primaryStage) throws Exception {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Enter the files directory: ");
+		String directory = sc.nextLine();
 		window = primaryStage;
-		File folder=new File("D:\\Java Programming\\Project7_kq874_cav2342\\sm_doc_set");
+		File folder=new File(directory);
 		File[] listOfFiles = folder.listFiles();
 		List<File> files = new ArrayList<File>();
 		for(File f:listOfFiles) {
 			files.add(f);
 		}
-		Scanner sc = new Scanner(System.in);
 		System.out.println("Input how many words in a phrase:");
 		int n = sc.nextInt();
 		sc.close();
@@ -156,6 +157,9 @@ public class Cheaters extends Application {
         			i++;
         		}
         	}
+        }
+        if(files.size()>50) {
+        	return;
         }
         String[][] Matrix = new String[files.size()+1][files.size()+1];
         for(int j = 0;j<files.size()+1;j++) {
