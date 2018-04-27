@@ -14,7 +14,7 @@ import java.util.Set;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-
+///Users/cindyvu/Documents/Spring 18/422/sm_doc_set
 public class Cheaters extends Application {
 	//Each n words phrase corresponds to a List of Files
 	private static Map<String,List<File>> repeatedPhrases = new HashMap<String,List<File>>();
