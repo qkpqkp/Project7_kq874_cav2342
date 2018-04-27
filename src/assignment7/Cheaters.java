@@ -158,10 +158,18 @@ public class Cheaters extends Application {
 		bp.setCenter(all);
 
 		//d.strokeRoundRect(50, 50, 25, 25, 10, 10);
-
-		for(File f:pairs){
-
-			Rectangle  = new Rectangle(50,25,100,140);
+		List<FileShape> shape = new ArrayList<FileShape>();
+		for(File f:count.keySet()){
+			FileShape r = new FileShape(f,count.get(f));
+			shape.add(r);
+		}
+		for(FileShape s:shape) {
+			if(s.getNum()==1) {
+				//print on the left
+			}
+			else {
+				//print on the right?
+			}
 		}
 		Scene s=new Scene(bp, 1600,1000);
 		window.setScene(s);
