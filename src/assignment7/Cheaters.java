@@ -122,6 +122,9 @@ public class Cheaters extends Application {
 			while(sc.hasNext()) {
 				String next = sc.next();
 				next = next.replaceAll("\\p{P}","").toUpperCase();
+				if(next.equals("")) {
+					continue;
+				}
 				list.add(next);
 			}
 			sc.close();
