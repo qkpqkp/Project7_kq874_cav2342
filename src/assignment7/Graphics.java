@@ -131,6 +131,10 @@ public class Graphics extends Application{
 						left.getChildren().add(s);
 						left.getChildren().add(link.get(s).get(0));
 						lefty+=100;
+						if(lefty>1000) {
+							lefty=50;
+							leftx+=300;
+						}
 					}
 				}
 			}
@@ -155,8 +159,8 @@ public class Graphics extends Application{
 			link.remove(s);
 		}
 		Random rand = new Random();
-		int limitx = 150;
-		int limity = 150;
+		int limitx = 0;
+		int limity = 0;
 		for(FileShape s:link.keySet()) {
 			int x = rand.nextInt(150)+limitx;
 			int y = rand.nextInt(150)+limity;
@@ -168,12 +172,12 @@ public class Graphics extends Application{
 			t.setLayoutX(x);
 			t.setLayoutY(y);
 			g.getChildren().add(t);
-			if(limitx+150<1.5*size) {
-				limitx += 300;
+			if(limitx+150<size) {
+				limitx += 250;
 			}
 			else {
-				limitx=150;
-				limity+=300;
+				limitx=0;
+				limity+=250;
 			}
 		}
 		for(Set<File> pair:FilePairs.keySet()) {
@@ -189,12 +193,16 @@ public class Graphics extends Application{
 					line.setEndX(s.getLayoutX());
 				}
 			}
-			int num = FilePairs.get(pair);
-			Text t = new Text(Integer.toString(num));
-			t.setLayoutX((line.getStartX()+line.getEndX())/2);
-			t.setLayoutY((line.getStartY()+line.getEndY())/2);
-			g.getChildren().add(t);
-			g.getChildren().add(line);
+			for(FileShape s:link.keySet()) {
+				if(l.get(0).equals(s.getFile())){
+					int num = FilePairs.get(pair);
+					Text t = new Text(Integer.toString(num));
+					t.setLayoutX((line.getStartX()+line.getEndX())/2);
+					t.setLayoutY((line.getStartY()+line.getEndY())/2);
+					g.getChildren().add(t);
+					g.getChildren().add(line);
+				}
+			}
 		}
 		Scene scene = new Scene(bp);
         window.setScene(scene);

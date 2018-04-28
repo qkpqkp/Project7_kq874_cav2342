@@ -19,10 +19,10 @@ public class FileShape extends Rectangle {
 		
 		for(int i = 0;i<num;i++) {
 			if(r<=1) {
-				r+=0.3;
+				r+=0.2;
 			}
 			if(g>=0) {
-				g-=0.3;
+				g-=0.2;
 			}
 			this.setFill(new Color(r,g,b,1));
 		}
