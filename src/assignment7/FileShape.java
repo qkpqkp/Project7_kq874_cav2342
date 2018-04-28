@@ -1,32 +1,40 @@
 package assignment7;
 
 import java.io.File;
+import java.util.Set;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 
-public class FileShape {
+public class FileShape extends Rectangle {
 	private File file;
-	private Rectangle r;
 	private int num;
-	public FileShape(File f, int num) {
+	private Set<FileShape> link;
+	public FileShape(File f, int num) {		
+		super(25 + 8*num,25+8*num);
 		file = f;
 		this.num = num;
-		int length = 20;
-		Rectangle r = new Rectangle(length + 2*num,length + 2*num);
-		Color c = Color.GREEN;
+		double r = 0,g=1,b=0;
+		
 		for(int i = 0;i<num;i++) {
-			r.setFill(c.darker());
+			if(r<=1) {
+				r+=0.3;
+			}
+			if(g>=0) {
+				g-=0.3;
+			}
+			this.setFill(new Color(r,g,b,1));
 		}
-		this.r = r;
 	}
 	public File getFile() {
 		return file;
 	}
-	public Rectangle getRectangle() {
-		return r;
-	}
 	public int getNum() {
 		return num;
 	}
+	public String toString() {
+		return file.getName();
+	}
+	
 }

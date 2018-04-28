@@ -79,109 +79,15 @@ public class Cheaters extends Application {
 			addFilePairs(repeatedPhrases.get(s));
 		}
 		printOutFiles();
-		HashMap<File, Integer> count=new HashMap<>();
-		HashMap<File, List<File>> matches=new HashMap<>();
-		HashMap<File, Boolean> countcheck=new HashMap<>();
-
-		//count key:file, value:how many files are matched with it
-		for(File f:listOfFiles){
-			if(count.containsKey(f)){
-				continue;
-			}
-			else if(!count.containsKey(f)){
-				int c=0;
-				for(Set<File> set:FilePairs.keySet()){
-					if(set.contains(f)){
-						c++;
-					}
-				}
-				if(c==0){
-					continue;
-				}
-				count.put(f,c);
-			}
-		}
-		for(File f:count.keySet()){
-			countcheck.put(f, false);
-
+		GraphicDemo graph = new GraphicDemo(FilePairs);
+		try {
+			graph.start(window);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
-		System.out.println("!!!!");
-		System.out.println(count);
-		System.out.println("!!!!");
-
-		//pairs list of files with one match
-		ArrayList<File> pairs=new ArrayList<>();
-		for (File f:count.keySet()){
-			if(count.get(f)==1){
-				pairs.add(f);
-			}
-		}
-		System.out.println(pairs);
-
-		for(File f:count.keySet()){
-			if(countcheck.get(f)==true){
-				continue;
-			}
-			List<File> contains=new ArrayList<>();
-			for(Set<File> set:FilePairs.keySet()){
-				if (set.contains(f)){
-					for(File s:set){
-						if (s.equals(f)){
-							continue;
-						}
-						else{
-							contains.add(s);
-							countcheck.put(s,true);
-						}
-					}
-				}
-			}
-			countcheck.put(f,true);
-
-			matches.put(f, contains);
-
-		}
-		System.out.println();
-		System.out.println("@@@@@@@@");
-
-		System.out.println(matches);
-
-
-
-		Canvas doubles=new Canvas(600,1000);
-		GraphicsContext d=doubles.getGraphicsContext2D();
-		Canvas all=new Canvas(1000,1000);
-		GraphicsContext a=doubles.getGraphicsContext2D();
-		BorderPane bp=new BorderPane();
-		bp.setRight(doubles);
-		bp.setCenter(all);
-
-		//d.strokeRoundRect(50, 50, 25, 25, 10, 10);
-		List<FileShape> shape = new ArrayList<FileShape>();
-		for(File f:count.keySet()){
-			FileShape r = new FileShape(f,count.get(f));
-			shape.add(r);
-		}
-		for(FileShape s:shape) {
-			if(s.getNum()==1) {
-				//print on the left
-			}
-			else {
-				//print on the right?
-			}
-		}
-		Scene s=new Scene(bp, 1600,1000);
-		window.setScene(s);
-		window.show();
-
-//		GraphicDemo graphic = new GraphicDemo(FilePairs);
-//		try {
-//			graphic.start(window);
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+	
 	}
 	
 	//Assign each file pair with the number of same phrases they have
