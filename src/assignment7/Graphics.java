@@ -15,6 +15,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
@@ -22,11 +23,11 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 
-public class GraphicDemo extends Application{
+public class Graphics extends Application{
 	private Map<Set<File>,Integer> FilePairs;
 	private Set<File> files;
 	Map<FileShape,List<FileShape>> link;
-	public GraphicDemo(Map<Set<File>,Integer> map) {
+	public Graphics(Map<Set<File>,Integer> map) {
 		List<Entry<Set<File>, Integer>> list = new ArrayList<>(map.entrySet());
 		for(int i = 0;i<list.size();i++) {
 			if(list.get(i).getValue()<100) {
@@ -47,7 +48,11 @@ public class GraphicDemo extends Application{
 	@Override
 	public void start(Stage window) throws Exception {
 		final int size = 1000;
+		BorderPane bp = new BorderPane();
 		Group g = new Group();
+		Group left = new Group();
+		bp.setCenter(g);
+		bp.setLeft(left);
 		HashMap<File, Integer> count=new HashMap<>();
 
 		HashMap<File, List<File>> matches=new HashMap<>();
@@ -104,6 +109,51 @@ public class GraphicDemo extends Application{
 				}
 			}
 		}
+		int leftx = 50, lefty=50;
+		Map<FileShape,FileShape> temp = new HashMap<FileShape,FileShape>();
+		for(FileShape s:link.keySet()) {
+			if(link.get(s).size()==1) {
+				if(link.get(link.get(s).get(0)).size()==1) {
+					if(!left.getChildren().contains(s)) {
+						temp.put(s,link.get(s).get(0));
+						temp.put(link.get(s).get(0),s);
+						s.setLayoutX(leftx);
+						s.setLayoutY(lefty);	
+						link.get(s).get(0).setLayoutX(leftx+200);
+						link.get(s).get(0).setLayoutY(lefty);
+						Text t1 = new Text(s.toString());
+						Text t2 = new Text(link.get(s).get(0).toString());
+						t1.setLayoutX(leftx);
+						t1.setLayoutY(lefty);
+						t2.setLayoutX(leftx+200);
+						t2.setLayoutY(lefty);
+						left.getChildren().addAll(t1,t2);
+						left.getChildren().add(s);
+						left.getChildren().add(link.get(s).get(0));
+						lefty+=100;
+					}
+				}
+			}
+		}
+		
+		for(FileShape s:temp.keySet()) {
+			Line line = new Line();
+			for(Set<File> set:FilePairs.keySet()) {
+				if(set.contains(s.getFile())) {
+					Text t = new Text(FilePairs.get(set).toString());
+					line.setStartX(s.getLayoutX());
+					line.setStartY(s.getLayoutY());
+					line.setEndX(temp.get(s).getLayoutX());
+					line.setEndY(temp.get(s).getLayoutY());
+					t.setLayoutX((line.getStartX()+line.getEndX())/2);
+					t.setLayoutY((line.getStartY()+line.getEndY())/2);
+					left.getChildren().addAll(t,line);
+				}
+			}
+		}
+		for(FileShape s:temp.keySet()) {
+			link.remove(s);
+		}
 		Random rand = new Random();
 		int limitx = 150;
 		int limity = 150;
@@ -146,7 +196,7 @@ public class GraphicDemo extends Application{
 			g.getChildren().add(t);
 			g.getChildren().add(line);
 		}
-		Scene scene = new Scene(g,2*size,size);
+		Scene scene = new Scene(bp);
         window.setScene(scene);
         window.show();
 	}

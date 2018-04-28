@@ -79,7 +79,7 @@ public class Cheaters extends Application {
 			addFilePairs(repeatedPhrases.get(s));
 		}
 		printOutFiles();
-		GraphicDemo graph = new GraphicDemo(FilePairs);
+		Graphics graph = new Graphics(FilePairs);
 		try {
 			graph.start(window);
 		} catch (Exception e) {
